@@ -1,0 +1,133 @@
+{
+  "map_ing_tipo": {
+    "photo": 5.457592592592593,
+    "share": 0.17551315789473687,
+    "texto_solo": 1.2610169491525425,
+    "video": 22.86421732399038
+  },
+  "map_ing_formato": {
+    "Texto": 1.2610169491525425,
+    "link": 0.1758179419525066,
+    "photo": 5.470369685767098,
+    "video": 22.78221414797605
+  },
+  "map_ing_cat": {
+    "arte": 0.01,
+    "astrologia": 0.03,
+    "ciencia": 0.076,
+    "clima": 0.12,
+    "cultura": 4.15357987923077,
+    "deportes": 4.8458064353125,
+    "economia": 0.05333333333333333,
+    "educacion": 1.05191078125,
+    "espectaculos": 14.199235890137652,
+    "estilo de vida": 8.579528813333333,
+    "gastronomia": 5.7866921184,
+    "historia": 3.0945716,
+    "humor": 22.459009639833333,
+    "medio ambiente": 0.06,
+    "moda": 8.77323176857143,
+    "motivacional": 3.5394037183870966,
+    "musica": 2.911717002605042,
+    "narrativo": 12.30018805,
+    "negocios": 0.17524612625,
+    "noticias": 3.5329494336000002,
+    "opinion": 0.023333333333333334,
+    "politica": 3.51,
+    "psicologia": 0.07285714285714286,
+    "religion": 3.0190977012499998,
+    "romance": 12.923947920000002,
+    "salud y bienestar": 3.0357134742307696,
+    "sociedad": 4.865806427741936,
+    "tecnologia": 0.115,
+    "viajes": 1.3280005933333332,
+    "videojuegos": 0.3350066975
+  },
+  "map_ing_radio": {
+    "Radio La Inolvidable": 6.584298126834171,
+    "Radio Magica": 0.8580741233823529,
+    "Radio Moda": 5.1874802428086415,
+    "Radio Nueva Q": 6.014024217798743,
+    "Radio Planeta": 12.384096932584269,
+    "Radio Ritmo Romantica": 21.142713270945624,
+    "Radiomar": 10.800982725803815
+  },
+  "map_posts_radio": {
+    "Radio La Inolvidable": 3.826923076923077,
+    "Radio Magica": 2.6153846153846154,
+    "Radio Moda": 6.230769230769231,
+    "Radio Nueva Q": 9.173076923076923,
+    "Radio Planeta": 5.134615384615385,
+    "Radio Ritmo Romantica": 8.134615384615385,
+    "Radiomar": 7.0576923076923075
+  },
+  "map_varianza": {
+    "Radio La Inolvidable": 31.60174188382887,
+    "Radio Magica": 3.1827933909304025,
+    "Radio Moda": 11.152942613334972,
+    "Radio Nueva Q": 11.684806915899511,
+    "Radio Planeta": 69.42109074401378,
+    "Radio Ritmo Romantica": 62.114365653297924,
+    "Radiomar": 26.177139107536163
+  },
+  "map_ing_radio_franja": {
+    "Radio La Inolvidable_mañana": 22.245823305277778,
+    "Radio La Inolvidable_mediodia": 4.740643193454545,
+    "Radio La Inolvidable_noche": 0.966954083076923,
+    "Radio La Inolvidable_tarde": 2.485472731894737,
+    "Radio Magica_mañana": 0.9013364566666666,
+    "Radio Magica_mediodia": 1.148921204,
+    "Radio Magica_noche": 0.842108498,
+    "Radio Magica_tarde": 0.6607008722413793,
+    "Radio Moda_mañana": 3.528249851960784,
+    "Radio Moda_mediodia": 5.338523437395833,
+    "Radio Moda_noche": 5.32486013,
+    "Radio Moda_tarde": 5.630222551466667,
+    "Radio Nueva Q_mañana": 4.370612494857143,
+    "Radio Nueva Q_mediodia": 6.192711381287879,
+    "Radio Nueva Q_noche": 5.109071301636364,
+    "Radio Nueva Q_tarde": 6.655953878772727,
+    "Radio Planeta_mañana": 12.620364021875,
+    "Radio Planeta_mediodia": 21.262735762083334,
+    "Radio Planeta_noche": 1.9065715412903228,
+    "Radio Planeta_tarde": 9.944557118560606,
+    "Radio Ritmo Romantica_mañana": 22.429698216140352,
+    "Radio Ritmo Romantica_mediodia": 23.124885937862594,
+    "Radio Ritmo Romantica_noche": 7.297701901538461,
+    "Radio Ritmo Romantica_tarde": 23.257018352732242,
+    "Radiomar_mañana": 9.140540371525425,
+    "Radiomar_mediodia": 11.091578593245615,
+    "Radiomar_noche": 18.9323614056,
+    "Radiomar_tarde": 9.981773867928993
+  },
+  "IC_POR_RADIO": {
+    "La Inolvidable": {
+      "ic_conformal": 29.790756848743566,
+      "ic_honesto": 8.949109427890008
+    },
+    "Magica": {
+      "ic_conformal": 1.5889078715624747,
+      "ic_honesto": 1.585976427532867
+    },
+    "Moda": {
+      "ic_conformal": 11.971097427485647,
+      "ic_honesto": 9.401829015014474
+    },
+    "Nueva Q": {
+      "ic_conformal": 12.102688002056842,
+      "ic_honesto": 16.57816809486996
+    },
+    "Planeta": {
+      "ic_conformal": 6.054614335740567,
+      "ic_honesto": 12.02945277534244
+    },
+    "Ritmo Romantica": {
+      "ic_conformal": 46.217401977247945,
+      "ic_honesto": 31.996071588520042
+    },
+    "mar": {
+      "ic_conformal": 21.58660008334271,
+      "ic_honesto": 19.10683738649622
+    }
+  }
+}
