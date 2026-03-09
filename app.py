@@ -21,7 +21,7 @@ st.set_page_config(
 )
 
 # ── Contraseña ────────────────────────────────────────────────────────
-_APP_PASSWORD = "crp2025"   # ← cambia esto por tu contraseña
+_APP_PASSWORD = "crp2026"   # ← cambia esto por tu contraseña
 
 if "autenticado" not in st.session_state:
     st.session_state["autenticado"] = False
