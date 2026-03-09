@@ -716,7 +716,7 @@ def formulario(key_prefix=""):
 st.markdown("""
 <div class="crp-topbar">
   <div class="crp-logo" style="background:transparent;padding:0;overflow:hidden;">
-    <img src="https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/logocrp.png"
+    <img src="https://raw.githubusercontent.com/datascience-art/crp-score-app/main/logocrp.png"
          style="width:40px;height:40px;object-fit:contain;border-radius:8px;"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
     <div style="display:none;width:40px;height:40px;background:var(--crp-green);border-radius:8px;
