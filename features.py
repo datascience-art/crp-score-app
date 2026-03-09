@@ -1,15 +1,13 @@
 """
 features.py
-Traduce los inputs del formulario en los 43 features que el modelo espera.
+Traduce los inputs del formulario en los features que el modelo espera.
 
 Uso:
     from features import transform_inputs
     df_features = transform_inputs(post_data, meta, lookups, enc)
 """
-import json
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 from utils.helpers import tiene_emoji, franja_horaria
 
@@ -17,7 +15,7 @@ from utils.helpers import tiene_emoji, franja_horaria
 def transform_inputs(post_data: dict, meta: dict, lookups: dict, enc) -> pd.DataFrame:
     """
     Recibe el diccionario del formulario y devuelve un DataFrame
-    de 1 fila × 43 columnas listo para pasarle a los modelos.
+    de 1 fila × N columnas listo para pasarle a los modelos.
 
     Parámetros
     ----------
@@ -62,9 +60,12 @@ def transform_inputs(post_data: dict, meta: dict, lookups: dict, enc) -> pd.Data
     emocion_sec    = str(post_data.get("emocion_secundaria",       "no aplica"))
 
     # ── Derivados automáticos ─────────────────────────────────────────
-    incluye_enlace_ext   = "si"  if (link and str(link).strip() != "") else "no"
-    tiene_cta            = "si"  if cta != "no aplica" else "no"
-    tiene_tono_humor     = "si"  if tipo_humor_val != "no aplica" else "no"
+    incluye_enlace_ext = "si" if (link and str(link).strip() != "") else "no"
+    tiene_cta          = "si" if cta != "no aplica" else "no"
+    tiene_tono_humor   = "si" if tipo_humor_val != "no aplica" else "no"
+
+    # ── Franja horaria (se usa en varias interacciones) ───────────────
+    franja = franja_horaria(hora)
 
     # ── Temporales ────────────────────────────────────────────────────
     row["hora"]          = hora
@@ -82,48 +83,51 @@ def transform_inputs(post_data: dict, meta: dict, lookups: dict, enc) -> pd.Data
     row["mes_cos"]       = np.cos(2 * np.pi * (fecha.month - 1) / 12)
 
     # ── Contenido ─────────────────────────────────────────────────────
-    row["es_video"]   = int(formato == "video")
-    row["len_copy"]   = len(copy)
-    row["tiene_link"] = int(incluye_enlace_ext == "si")
-    row["tiene_emoji"]= tiene_emoji(copy)
+    row["es_video"]    = int(formato == "video")
+    row["len_copy"]    = len(copy)
+    row["tiene_link"]  = int(incluye_enlace_ext == "si")
+    row["tiene_emoji"] = tiene_emoji(copy)
 
-    # ── Franja e interacciones categóricas ────────────────────────────
-    franja = franja_horaria(hora)
+    # ── Interacciones categóricas ─────────────────────────────────────
     row["radio_x_formato"]  = f"{radio}_{formato}"
     row["radio_x_tipo"]     = f"{radio}_{tipo}"
     row["formato_x_franja"] = f"{formato}_{franja}"
+    row["radio_x_franja"]   = f"{radio}_{franja}"          # ← FIX v18
     row["video_x_radio"]    = f"{row['es_video']}_{radio}"
 
     # ── Aggregation lookups (desde lookups.json) ──────────────────────
-    g_ing  = meta["global_ing"]
-    g_post = meta["global_posts_sem"]
-    g_var  = meta["global_varianza"]
+    g_ing       = meta["global_ing"]
+    g_post      = meta["global_posts_sem"]
+    g_var       = meta["global_varianza"]
+    g_ing_rf    = meta.get("global_ing_radio_franja", g_ing)  # ← FIX v18
 
-    row["media_ing_tipo"]      = lookups["map_ing_tipo"].get(tipo,         g_ing)
-    row["media_ing_formato"]   = lookups["map_ing_formato"].get(formato,   g_ing)
-    row["media_ing_categoria"] = lookups["map_ing_cat"].get(cat_contenido, g_ing)
-    row["media_ing_radio"]     = lookups["map_ing_radio"].get(radio,       g_ing)
-    row["posts_radio_semana"]  = lookups["map_posts_radio"].get(radio,     g_post)
-    row["varianza_ing_radio"]  = lookups["map_varianza"].get(radio,        g_var)
+    row["media_ing_tipo"]         = lookups["map_ing_tipo"].get(tipo,                    g_ing)
+    row["media_ing_formato"]      = lookups["map_ing_formato"].get(formato,              g_ing)
+    row["media_ing_categoria"]    = lookups["map_ing_cat"].get(cat_contenido,            g_ing)
+    row["media_ing_radio"]        = lookups["map_ing_radio"].get(radio,                  g_ing)
+    row["posts_radio_semana"]     = lookups["map_posts_radio"].get(radio,                g_post)
+    row["varianza_ing_radio"]     = lookups["map_varianza"].get(radio,                   g_var)
+    # FIX v18: lookup compuesto Radio × franja (clave = "Radio_franja")
+    rf_key = f"{radio}_{franja}"
+    row["media_ing_radio_franja"] = lookups.get("map_ing_radio_franja", {}).get(rf_key,  g_ing_rf)
 
     # ── Columnas categóricas (todas como string) ──────────────────────
-    row["Radio"]                   = radio
-    row["Formato"]                 = formato
-    row["tipo"]                    = tipo
-    row["subcategoria_contenido"]  = subcat
-    row["categoria_contenido"]     = cat_contenido
-    row["tono_emocional_principal"]= tono_emo
-    row["estilo_comunicativo"]     = estilo_com
-    row["celebridad_principal"]    = celebridad
-    row["tipo_enlace"]             = tipo_enlace
-    row["incluye_enlace_externo"]  = incluye_enlace_ext
-    row["tipo_humor"]              = tipo_humor_val
-    row["situacion"]               = situacion
-    row["tiene_tono_humoristico"]  = tiene_tono_humor
-    row["tipo_llamado_a_la_accion"]= cta
+    row["Radio"]                    = radio
+    row["Formato"]                  = formato
+    row["tipo"]                     = tipo
+    row["subcategoria_contenido"]   = subcat
+    row["categoria_contenido"]      = cat_contenido
+    row["tono_emocional_principal"] = tono_emo
+    row["estilo_comunicativo"]      = estilo_com
+    row["celebridad_principal"]     = celebridad
+    row["tipo_enlace"]              = tipo_enlace
+    row["incluye_enlace_externo"]   = incluye_enlace_ext
+    row["tipo_humor"]               = tipo_humor_val
+    row["situacion"]                = situacion
+    row["tiene_tono_humoristico"]   = tiene_tono_humor
+    row["tipo_llamado_a_la_accion"] = cta
     row["tiene_llamado_a_la_accion"]= tiene_cta
-    row["emocion_secundaria"]      = emocion_sec
-    row["video_x_radio"]           = row["video_x_radio"]
+    row["emocion_secundaria"]       = emocion_sec
 
     # ── Construir DataFrame y aplicar OrdinalEncoder ──────────────────
     df = pd.DataFrame([row])
